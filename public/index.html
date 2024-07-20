@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GLSM Script Store</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "glsm-base": "#ffffff",
+              "glsm-primary": "#1a1a1a",
+              "glsm-secondary": "#2c2c2c",
+              "glsm-success": "#4caf50",
+              "glsm-darker": "#121212",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-glsm-base text-glsm-darker">
+    <header
+      class="container mx-auto px-4 py-3 flex items-center justify-between"
+    >
+      <a href="#" class="flex items-center space-x-2">
+        <img
+          src="https://i.ibb.co/Krc6SQk/18e37a34-3c05-447c-ab2d-f712253ed5b6.jpg"
+          alt="GLSM Logo"
+          class="w-10 h-10 rounded-full"
+        />
+        <span
+          class="text-2xl font-bold text-glsm-base hover:text-glsm-primary transition duration-300"
+          >GLSM</span
+        >
+      </a>
+
+      <div class="flex items-center space-x-4">
+        <a
+          href="https://discord.com/oauth2/authorize?client_id=1238151974382338118&response_type=code&redirect_uri=https%3A%2F%2F5b88-47-253-82-249.ngrok-free.app%2Fapi%2Fdiscord%2Fauth&scope=guilds+identify"
+          id="login_button"
+          class="text-glsm-base hover:text-glsm-primary transition duration-300"
+          >Login</a
+        >
+      </div>
+    </header>
+    <section class="bg-glsm-primary py-20 relative">
+      <div id="boids-background" class="absolute inset-0 z-0"></div>
+      <div class="container mx-auto px-4 text-center relative z-1">
+        <h1 class="text-5xl text-glsm-base font-bold mb-4">
+          Welcome to GLSM Script Store
+        </h1>
+        <p class="text-xl text-glsm-base mb-8">
+          Discover and download powerful scripts to enhance your gaming server
+        </p>
+        <a
+          href="#server-scripts"
+          class="bg-glsm-success hover:bg-glsm-secondary text-glsm-base font-bold py-2 px-6 rounded-full transition duration-300"
+          >Explore Scripts</a
+        >
+      </div>
+    </section>
+
+    <main class="container mx-auto px-4 mt-16 relative z-3">
+      <h2
+        id="server-scripts"
+        class="text-4xl font-bold text-center text-glsm-darker mb-8"
+      >
+        Server Scripts
+      </h2>
+      <div
+        id="server-list"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- Server scripts will be dynamically inserted here -->
+      </div>
+    </main>
+
+    <footer class="container mx-auto px-4 py-8 text-center text-glsm-base">
+      <p>&copy; 2024 GLSM Script Store. All rights reserved.</p>
+    </footer>
+
+    <script
+      src="https://kit.fontawesome.com/your-fontawesome-kit.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function toggleDropdown() {
+        const dropdown = document.getElementById("dropdown");
+        dropdown.classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches("#profile_picture")) {
+          const dropdowns = document.getElementsByClassName("dropdown");
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+
+      // Check if user is admin and show/hide dashboard link accordingly
+      function checkAdminStatus() {
+        // This is a placeholder function. In a real application, you would check the user's admin status from your backend or local storage.
+        const isAdmin = false; // Set this to true to show the dashboard link
+        const dashboardLink = document.getElementById("dashboard_link");
+        if (isAdmin) {
+          dashboardLink.style.display = "block";
+        } else {
+          dashboardLink.style.display = "none";
+        }
+      }
+
+      // Call this function when the page loads
+      window.onload = checkAdminStatus;
+    </script>
+  </body>
+</html>
