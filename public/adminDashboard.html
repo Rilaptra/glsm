@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="https://i.ibb.co/Krc6SQk/18e37a34-3c05-447c-ab2d-f712253ed5b6.jpg"
+      type="image/jpeg"
+    />
+    <meta
+      name="description"
+      content="Explore and download powerful server scripts for your gaming community. GLSM offers a wide range of high-quality and customizable scripts to enhance your gaming experience."
+    />
+    <meta property="og:title" content="Growlauncher Script Market" />
+    <meta
+      property="og:description"
+      content="Discover and download top-notch server scripts for your gaming community. Enhance your server's capabilities with GLSM Script Store."
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co/Krc6SQk/18e37a34-3c05-447c-ab2d-f712253ed5b6.jpg"
+    />
+    <title>GLSM | Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              glsm: {
+                base: "#F7EEDD",
+                darker: "#2563EB",
+                secondary: "#41C9E2",
+                primary: "#008DDA",
+                success: "#57F287",
+                warning: "#FFB25C",
+                error: "#FF5252",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-full">
+    <nav class="bg-blue-500 shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
+      >
+        <div
+          class="text-glsm-base ml-1 border py-1 px-3 rounded-lg cursor-pointer hover:bg-blue-400 transition-all"
+        >
+          <i class="fas fa-bars"></i>
+        </div>
+        <div class="text-glsm-base">
+          <h2>Dashboard</h2>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <img
+              src="https://i.ibb.co/2dh4YL3/nulprofile.jpg"
+              id="profile_picture"
+              class="w-10 h-10 rounded-full border-2 border-glsm-primary hover:border-glsm-success transition duration-300 cursor-pointer"
+              onclick="(() => {
+                dropdown.classList.toggle('translate-y-24')
+              })()"
+            />
+            <div
+              id="dropdown"
+              class="dropdown -top-10 -z-10 absolute origin-top transition-transform right-0 w-32 lg:w-48 bg-glsm-primary rounded-md shadow-lg"
+            >
+              <a
+                href="#"
+                id="logout"
+                class="block px-4 py-2 text-sm text-glsm-base hover:bg-glsm-secondary transition duration-300"
+              >
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+              </a>
+              <a
+                href="#"
+                id="dashboard_link"
+                class="block px-4 py-2 text-sm text-glsm-base hover:bg-glsm-secondary transition duration-300"
+              >
+                <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <script
+      src="https://kit.fontawesome.com/4a03f030e0.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

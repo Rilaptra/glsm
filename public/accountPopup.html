@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Information Popup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              discord: {
+                bg: "#36393f",
+                popup: "#2f3136",
+                button: "#7289da",
+                "button-hover": "#677bc4",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-black select-none bg-opacity-50 flex items-center justify-center h-screen"
+  >
+    <div
+      class="bg-discord-popup rounded-lg shadow-2xl p-8 relative max-w-md w-full border border-gray-700"
+    >
+      <div class="flex justify-end absolute right-5 top-3">
+        <button
+          onclick="closePopup()"
+          class="text-gray-400 hover:text-white active:scale-75 transition duration-300"
+        >
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+      <h2 class="text-2xl font-bold mb-10 text-white -mt-3 text-center">
+        <i class="fas fa-user mr-2"></i> User Info
+      </h2>
+      <div class="flex items-center mb-2">
+        <img
+          id="avatar"
+          class="w-20 h-20 rounded-full border-4 border-discord-button"
+          src=""
+          alt="Avatar"
+        />
+        <div class="ml-4">
+          <p id="username" class="text-xl font-semibold text-white"></p>
+          <p id="id" class="text-sm text-gray-400"></p>
+          <p
+            id="copyNotif"
+            class="text-sm hidden absolute text-gray-100 px-2 py-1"
+          >
+            Copied!
+          </p>
+        </div>
+      </div>
+      <div
+        class="mx-2 my-10 font-bold gap-4 flex justify-center text-sm text-gray-300"
+      >
+        <p
+          id="balance"
+          class="flex relative border min-w-24 transition-colors duration-200 bg-yellow-400 bg-opacity-10 hover:bg-opacity-40 justify-center p-2.5 rounded-lg border-yellow-300 items-center"
+        >
+          <i class="fas fa-coins mr-2 text-yellow-500"> </i>
+          <span></span>
+        </p>
+        <p
+          id="admin"
+          class="flex relative border min-w-24 transition-colors duration-200 bg-green-400 bg-opacity-10 hover:bg-opacity-40 justify-center p-2.5 rounded-lg border-green-300 items-center"
+        >
+          <i class="fas fa-user-cog mr-2 text-green-500"> </i>
+          <span></span>
+        </p>
+        <p
+          id="scriptBuyed"
+          class="flex relative border min-w-24 transition-colors duration-200 bg-blue-400 bg-opacity-10 hover:bg-opacity-40 justify-center p-2.5 rounded-lg border-blue-300 items-center"
+        >
+          <i class="fas fa-scroll mr-2 text-blue-500"> </i>
+          <span></span>
+        </p>
+      </div>
+      <div class="mt-8 space-y-4">
+        <button
+          onclick="topupBalance()"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+        >
+          <i class="fas fa-coins mr-2"></i> Topup Balance
+        </button>
+        <button
+          onclick="logout()"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+        >
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </button>
+      </div>
+    </div>
+
+    <script>
+      var accountData = {};
+
+      function copyId() {
+        navigator.clipboard.writeText(
+          document.getElementById("id").textContent.match(/(\d+)/)[0]
+        );
+        copyNotif.classList.toggle("hidden");
+        setTimeout(() => copyNotif.classList.toggle("hidden"), 3000);
+      }
+
+      function populateData() {
+        document.getElementById("avatar").src =
+          accountData.user.discord.avatarUrl;
+        document.getElementById("username").textContent =
+          accountData.user.discord.username;
+        document.getElementById("id").innerHTML = `ID: ${accountData.user.id} <i
+              onclick="copyId()"
+              class="fas fa-copy ml-2 text-lg font-light cursor-pointer hover:text-gray-200 active:text-gray-200"
+            ></i>`;
+        document
+          .getElementById("balance")
+          .querySelector(
+            "span"
+          ).textContent = `Rp ${accountData.user.balance.toFixed(2)}`;
+        document.getElementById("admin").querySelector("span").textContent =
+          accountData.user.isAdmin ? "Admin" : "Buyer";
+        /**
+         * @type {string[]}
+         */
+        const scriptBuyed = accountData.user.scriptBuyed;
+        document
+          .getElementById("scriptBuyed")
+          .querySelector("span").textContent = `${
+          scriptBuyed.length > 0 ? scriptBuyed.length : "None"
+        }`;
+      }
+
+      function closePopup() {
+        window.parent.postMessage("closePopup", "*");
+      }
+
+      function topupBalance() {
+        window.parent.postMessage({ type: "openTopup", accountData }, "*");
+      }
+
+      function logout() {
+        window.parent.postMessage("logout", "*");
+      }
+
+      window.onload = async () => {
+        accountData = await fetch("/api/account/login", {
+          method: "POST",
+        }).then((x) => x.json());
+        populateData();
+      };
+    </script>
+  </body>
+</html>

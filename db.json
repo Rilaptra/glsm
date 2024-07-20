@@ -29,7 +29,7 @@
       },
       "id": "800976578410053655",
       "isAdmin": true,
-      "token": "NULL",
+      "token": "iVhYMio5Grex4UNkKaDDOxxCFx4M6m",
       "guilds": [
         {
           "id": "891923435033362452",
@@ -83,6 +83,20 @@
           "logo": "041780514a8b19f7a2472a43127ac9f5"
         }
       ]
+    },
+    "1256202302147137537": {
+      "balance": 0,
+      "scriptBuyed": [],
+      "discord": {
+        "id": "1256202302147137537",
+        "username": "siapaa_yaa",
+        "avatar": "6c5996770c985bcd6e5b68131ff2ba04",
+        "avatarUrl": "https://cdn.discordapp.com/avatars/1256202302147137537/6c5996770c985bcd6e5b68131ff2ba04"
+      },
+      "id": "1256202302147137537",
+      "isAdmin": false,
+      "token": "47iYmREtEZfqNOgkcFMBHTC905uA8U",
+      "guilds": []
     }
   },
   "scripts": {}

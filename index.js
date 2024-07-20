@@ -2,6 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const url = require("url");
+const cookie = require("cookie");
 const { Database } = require("./classes.js");
 
 const PORT = 80;
@@ -21,6 +22,21 @@ const parseCookie = (str) =>
       acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
       return acc;
     }, {});
+
+const callApiHandler = (apiHandler, data, db, res) => {
+  apiHandler(data, db, (err, result) => {
+    if (err) {
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ error: err.message }));
+    } else {
+      res.writeHead(result.status || 200, {
+        "Content-Type": "application/json",
+        ...result.headers,
+      });
+      res.end(JSON.stringify(result));
+    }
+  });
+};
 
 const server = http.createServer((req, res) => {
   if (!req.url.startsWith("/api/")) {
@@ -62,7 +78,6 @@ const server = http.createServer((req, res) => {
       }
     });
   } else {
-    // Handle API requests
     const parsedUrl = url.parse(req.url, true);
     const parts = parsedUrl.pathname.split("/").filter(Boolean);
 
@@ -85,28 +100,33 @@ const server = http.createServer((req, res) => {
         } else {
           data = parsedUrl.query;
         }
+
+        data.cookie = cookie.parse(req.headers.cookie || "");
         data.req = req;
-        data.cookie = parseCookie(req.headers.cookie);
-        apiHandler(data, db, (err, result) => {
-          if (err) {
-            res.writeHead(500, { "Content-Type": "application/json" });
-            res.end(JSON.stringify({ error: err.message }));
-          } else {
-            res.writeHead(result.status || 200, {
-              "Content-Type": "application/json",
-              ...result.headers,
-            });
-            res.end(JSON.stringify(result));
-          }
-        });
+
+        if (req.method === "POST") {
+          let body = "";
+          req.on("data", (chunk) => {
+            body += chunk.toString();
+          });
+
+          req.on("end", () => {
+            try {
+              data.body = JSON.parse(body);
+            } catch (e) {
+              data.body = body;
+            }
+
+            callApiHandler(apiHandler, data, db, res);
+          });
+        } else {
+          callApiHandler(apiHandler, data, db, res);
+        }
       } catch (error) {
         console.log(error);
         res.writeHead(404, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ error: "API endpoint not found" }));
       }
-    } else {
-      res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "Invalid API request" }));
     }
   }
 });
