@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .bg-discord-popup {
+        background-color: #36393f;
+      }
+      .text-glsm-base {
+        color: #dcddde;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-white">
+    <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <h1 id="dashboard" class="text-glsm-base font-semibold">Dashboard</h1>
+      <div class="flex items-center space-x-4">
+        <div class="relative">
+          <img
+            id="profile_picture"
+            src="https://i.ibb.co/2dh4YL3/nulprofile.jpg"
+            alt="Profile"
+            class="w-10 h-10 rounded-full border-2 border-indigo-400 hover:border-gray-100 transition duration-300 cursor-pointer"
+          />
+          <div
+            id="dropdown"
+            class="dropdown -top-10 -z-10 absolute origin-top transition-transform right-0 w-32 lg:w-48 bg-indigo-600 border-indigo-600 rounded-md shadow-lg hidden"
+          >
+            <a
+              href="#"
+              id="logout"
+              class="block px-4 py-2 text-sm text-glsm-base hover:bg-indigo-400 rounded-tl-md rounded-tr-md transition duration-300"
+              >Logout</a
+            >
+            <a
+              href="/"
+              id="dashboard_link"
+              class="block px-4 py-2 text-sm text-glsm-base hover:bg-indigo-400 rounded-bl-md rounded-br-md transition duration-300"
+              >Home</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="menu"
+      class="menu fixed h-full min-w-48 bg-indigo-600 transition -translate-x-48"
+    >
+      <ul class="py-4">
+        <li
+          class="px-4 py-2 hover:bg-indigo-400 cursor-pointer"
+          onclick="showSection('scripts')"
+        >
+          Scripts
+        </li>
+        <li
+          class="px-4 py-2 hover:bg-indigo-400 cursor-pointer"
+          onclick="showSection('servers')"
+        >
+          Servers
+        </li>
+        <li
+          class="px-4 py-2 hover:bg-indigo-400 cursor-pointer"
+          onclick="showSection('users')"
+        >
+          Users
+        </li>
+      </ul>
+    </div>
+
+    <main class="ml-48 p-5">
+      <div
+        id="scripts"
+        class="script-container flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+      >
+        <h2 class="text-2xl font-bold">Scripts</h2>
+        <!-- Script list will be populated here -->
+      </div>
+
+      <div
+        id="servers"
+        class="script-container flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+      >
+        <h2 class="text-2xl font-bold">Servers</h2>
+        <!-- Server list will be populated here -->
+      </div>
+
+      <div
+        id="users"
+        class="script-container flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+      >
+        <h2 class="text-2xl font-bold">Users</h2>
+        <!-- User list will be populated here -->
+      </div>
+    </main>
+
+    <div
+      id="popupSection"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center"
+    >
+      <div
+        id="popupContent"
+        class="bg-discord-popup rounded-lg shadow-2xl p-8 m-11 relative max-w-md w-full border border-gray-700"
+      >
+        <!-- Popup content will be loaded here -->
+      </div>
+    </div>
+
+    <div class="fixed bottom-5 right-5 z-50">
+      <button
+        id="addButton"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Add New
+      </button>
+    </div>
+
+    <script>
+      // Toggle menu
+      document
+        .querySelector("#profile_picture")
+        .addEventListener("click", () => {
+          document.querySelector("#dropdown").classList.toggle("hidden");
+        });
+
+      // Show/hide sections
+      function showSection(sectionId) {
+        document.querySelectorAll(".script-container").forEach((container) => {
+          container.classList.add("scale-0", "opacity-0");
+        });
+        document
+          .querySelector(`#${sectionId}`)
+          .classList.remove("scale-0", "opacity-0");
+      }
+
+      // Toggle menu
+      document.querySelector("#menu").classList.toggle("-translate-x-48");
+
+      // Add new item
+      document.querySelector("#addButton").addEventListener("click", () => {
+        document.querySelector("#popupSection").classList.remove("hidden");
+        fetch("addScriptPopup.html")
+          .then((response) => response.text())
+          .then((html) => {
+            document.querySelector("#popupContent").innerHTML = html;
+          });
+      });
+
+      // Close popup
+      document.querySelector("#popupSection").addEventListener("click", (e) => {
+        if (e.target === document.querySelector("#popupSection")) {
+          document.querySelector("#popupSection").classList.add("hidden");
+        }
+      });
+
+      // Fetch and display data for each section
+      function fetchData(section) {
+        // Simulated API call
+        const data = {
+          scripts: [
+            { name: "Script 1", description: "Description 1" },
+            { name: "Script 2", description: "Description 2" },
+          ],
+          servers: [
+            { name: "Server 1", status: "Online" },
+            { name: "Server 2", status: "Offline" },
+          ],
+          users: [
+            { name: "User 1", email: "user1@example.com" },
+            { name: "User 2", email: "user2@example.com" },
+          ],
+        };
+
+        const container = document.querySelector(`#${section}`);
+        container.innerHTML = `<h2 class="text-2xl font-bold">${
+          section.charAt(0).toUpperCase() + section.slice(1)
+        }</h2>`;
+
+        data[section].forEach((item) => {
+          const itemElement = document.createElement("div");
+          itemElement.className = "bg-gray-800 p-4 rounded-lg";
+          itemElement.innerHTML = `
+                    <h3 class="text-xl font-semibold">${item.name}</h3>
+                    <p>${Object.values(item)[1]}</p>
+                `;
+          container.appendChild(itemElement);
+        });
+      }
+
+      // Initial data fetch
+      fetchData("scripts");
+      fetchData("servers");
+      fetchData("users");
+    </script>
+  </body>
+</html>

@@ -4,6 +4,7 @@
       "name": "Erzy.sh Server",
       "description": "Lorem ipsum dolor sit amet",
       "owner": "Erzy.sh",
+      "id": "1110517120074256434",
       "last_updated": "08/14/2024",
       "rating": 5,
       "logo": "https://cdn.discordapp.com/icons/1110517120074256434/041780514a8b19f7a2472a43127ac9f5.webp?size=256"
@@ -12,6 +13,7 @@
       "name": "LuaGT",
       "description": "Lorem ipsum, dolor sit amet",
       "owner": "FrostyIce",
+      "id": "891923435033362452",
       "last_updated": "11/07/2024",
       "rating": 5,
       "logo": "https://cdn.discordapp.com/icons/891923435033362452/bcee3a4904bc30b918f4e786d051c3e9.webp?size=256"
@@ -61,7 +63,7 @@
         "avatarUrl": "https://cdn.discordapp.com/avatars/618796322262351893/7477768927168bbef35fd5961c1912d9"
       },
       "id": "618796322262351893",
-      "isAdmin": false,
+      "isAdmin": true,
       "token": "FVBKUx0CEWSn7xrWelRR8skmPJMfdP",
       "guilds": [
         {
@@ -99,5 +101,214 @@
       "guilds": []
     }
   },
-  "scripts": {}
+  "scripts": {
+    "1721539537431": {
+      "id": "1721539537431",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539544797": {
+      "id": "1721539544797",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539558997": {
+      "id": "1721539558997",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539559500": {
+      "id": "1721539559500",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539559919": {
+      "id": "1721539559919",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539560223": {
+      "id": "1721539560223",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539560457": {
+      "id": "1721539560457",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539560608": {
+      "id": "1721539560608",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539560776": {
+      "id": "1721539560776",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539560909": {
+      "id": "1721539560909",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561079": {
+      "id": "1721539561079",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561246": {
+      "id": "1721539561246",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561379": {
+      "id": "1721539561379",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561530": {
+      "id": "1721539561530",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561682": {
+      "id": "1721539561682",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    },
+    "1721539561816": {
+      "id": "1721539561816",
+      "name": "Auto Rotasi V3",
+      "description": "Eosmjslwkks",
+      "link": "https://smms.com",
+      "author": "erzysh",
+      "server": "Erzy.sh Server",
+      "price": {
+        "money": 20000,
+        "dl": 5
+      },
+      "createdAt": "2024-07-21T12:18"
+    }
+  }
 }

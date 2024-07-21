@@ -347,70 +347,100 @@ class User {
 }
 
 /**
- * @class Script
- * @description Represents a script in the system.
+ * Represents a script in the system.
  */
 class Script {
   /**
-   * @constructor
-   * @param {{}} scriptData - The script data.
+   * Create a new Script instance.
+   * @param {Object} scriptData - The data for creating a new script.
    * @param {string} scriptData.id - The unique identifier for the script.
    * @param {string} scriptData.name - The name of the script.
    * @param {string} scriptData.description - A description of the script.
-   * @param {string} scriptData.content - The content of the script.
+   * @param {string} scriptData.link - The link to the script.
    * @param {string} scriptData.author - The author of the script.
-   * @param {Date} [scriptData.createdAt=new Date()] - The creation date of the script.
+   * @param {string} scriptData.server - The server associated with the script.
+   * @param {Object} [scriptData.price] - The price of the script.
+   * @param {number} [scriptData.price.money=0] - The price in money.
+   * @param {number} [scriptData.price.dl=0] - The price in DL (Diamond Locks).
+   * @param {string} [scriptData.createdAt=new Date()] - The creation date of the script as a string.
    */
   constructor({
     id,
     name,
     description,
-    content,
+    link,
+    price = { money: 0, dl: 0 },
     author,
+    server,
     createdAt = new Date(),
   }) {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.content = content;
+    this.link = link;
     this.author = author;
+    this.server = server;
+    this.price = price;
     this.createdAt = createdAt;
   }
 }
 
 /**
- * @class Server
- * @description Represents a server in the system.
+ * Represents a server.
  */
 class Server {
   /**
-   * @constructor
-   * @param {{}} serverData - The server data.
-   * @param {string} serverData.id - The unique identifier for the server.
-   * @param {string} serverData.name - The name of the server.
-   * @param {string} [serverData.owner] - The owner of the server.
-   * @param {string} [serverData.description] - The description of the server.
-   * @param {string} [serverData.last_updated] - The last updated date of the server.
-   * @param {number} [serverData.rating=0] - The rating of the server.
-   * @param {string} [serverData.logo] - The logo URL of the server.
+   * Creates a new Server instance.
+   * @param {Object} params - The parameters for creating a server.
+   * @param {string} params.id - The ID of the server.
+   * @param {string} params.name - The name of the server.
+   * @param {boolean} [params.owner=false] - Indicates if the current user is the owner of the server.
+   * @param {string} [params.description="No Description"] - The description of the server.
+   * @param {string} [params.last_updated] - The date when the server was last updated. Defaults to the current date.
+   * @param {number} [params.rating=0] - The rating of the server.
+   * @param {string} params.logo - The URL to the server's logo.
    */
-  constructor(serverData) {
-    this.id = serverData.id;
-    this.name = serverData.name;
+  constructor({ id, name, owner, description, last_updated, rating, logo }) {
+    /**
+     * @type {string}
+     */
+    this.id = id;
+
+    /**
+     * @type {string}
+     */
+    this.name = name;
+
     /**
      * @type {boolean}
      */
-    this.owner = serverData.owner || false;
-    this.description = serverData.description || "No Description";
+    this.owner = owner || false;
+
+    /**
+     * @type {string}
+     */
+    this.description = description || "No Description";
+
+    /**
+     * @type {string}
+     */
     this.lastUpdated =
-      serverData.last_updated ||
+      last_updated ||
       new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "2-digit",
         day: "2-digit",
       });
-    this.rating = serverData.rating || 0;
-    this.logo = serverData.logo;
+
+    /**
+     * @type {number}
+     */
+    this.rating = rating || 0;
+
+    /**
+     * @type {string}
+     */
+    this.logo = logo;
   }
 }
 

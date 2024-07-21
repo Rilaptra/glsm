@@ -86,7 +86,7 @@
           <span></span>
         </p>
       </div>
-      <div class="mt-8 space-y-4">
+      <div id="buttonSection" class="mt-8 space-y-4">
         <button
           onclick="topupBalance()"
           class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
@@ -138,6 +138,19 @@
           .querySelector("span").textContent = `${
           scriptBuyed.length > 0 ? scriptBuyed.length : "None"
         }`;
+
+        if (accountData.user.isAdmin) {
+          const buttonSection = document.getElementById("buttonSection");
+
+          buttonSection.innerHTML += `
+            <button
+              onclick="window.location.href='/admin.html'"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+            >
+              <i class="fas fa-dashboard mr-2"></i> Dashboard
+            </button>
+          `;
+        }
       }
 
       function closePopup() {

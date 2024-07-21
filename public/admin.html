@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="https://i.ibb.co/Krc6SQk/18e37a34-3c05-447c-ab2d-f712253ed5b6.jpg"
+      type="image/jpeg"
+    />
+    <meta
+      name="description"
+      content="Explore and download powerful server scripts for your gaming community. GLSM offers a wide range of high-quality and customizable scripts to enhance your gaming experience."
+    />
+    <meta property="og:title" content="Growlauncher Script Market" />
+    <meta
+      property="og:description"
+      content="Discover and download top-notch server scripts for your gaming community. Enhance your server's capabilities with GLSM Script Store."
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co/Krc6SQk/18e37a34-3c05-447c-ab2d-f712253ed5b6.jpg"
+    />
+    <title>GLSM | Dashboard</title>
+    <!-- Sweet Alert Play CDN Module Link -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              glsm: {
+                base: "#F7EEDD",
+                darker: "#2563EB",
+                secondary: "#41C9E2",
+                primary: "#008DDA",
+                success: "#57F287",
+                warning: "#FFB25C",
+                error: "#FF5252",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="min-h-full bg-gray-600">
+    <nav class="bg-indigo-500 shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex items-center justify-between"
+      >
+        <i
+          id="menubar"
+          onclick="menu()"
+          class="fas fa-bars py-1 px-3 cursor-pointer transition-all text-glsm-base hover:opacity-80 font-thin text-xl"
+        ></i>
+        <h2 class="text-glsm-base font-semibold">Dashboard</h2>
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <img
+              src="https://i.ibb.co/2dh4YL3/nulprofile.jpg"
+              id="profile_picture"
+              class="w-10 h-10 rounded-full border-2 border-indigo-400 hover:border-gray-100 transition duration-300 cursor-pointer"
+              onclick="(() => {
+                dropdown.classList.toggle('translate-y-24')
+              })()"
+            />
+            <div
+              id="dropdown"
+              class="dropdown -top-10 -z-10 absolute origin-top transition-transform right-0 w-32 lg:w-48 bg-indigo-600 border-indigo-600 rounded-md shadow-lg"
+            >
+              <a
+                href="#"
+                id="logout"
+                class="block px-4 py-2 text-sm text-glsm-base hover:bg-indigo-400 rounded-tl-md rounded-tr-md transition duration-300"
+              >
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+              </a>
+              <a
+                href="/"
+                id="dashboard_link"
+                class="block px-4 py-2 text-sm text-glsm-base hover:bg-indigo-400 rounded-bl-md rounded-br-md transition duration-300"
+              >
+                <i class="fas fa-home mr-2"></i> Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div
+      id="menu"
+      class="menu fixed h-full min-w-48 bg-indigo-600 transition -translate-x-48"
+    >
+      <ul>
+        <li
+          data-category="scripts"
+          class="text-glsm-base py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
+        >
+          <i class="fas text-glsm-base fa-code mr-3"></i> Scripts
+        </li>
+        <li
+          data-category="servers"
+          class="text-glsm-base py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
+        >
+          <i class="fas text-glsm-base fa-server mr-3.5 ml-0.5"></i> Servers
+        </li>
+        <li
+          data-category="users"
+          class="text-glsm-base py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
+        >
+          <i class="fas text-glsm-base fa-users mr-2.5"></i> Users
+        </li>
+      </ul>
+    </div>
+
+    <div
+      id="scripts"
+      class="script-container p-5 flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+    >
+      <!-- Scripts will be displayed here -->
+    </div>
+    <div
+      id="servers"
+      class="script-container p-5 flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+    >
+      <!-- Servers will be displayed here -->
+    </div>
+    <div
+      id="users"
+      class="script-container p-5 flex flex-col gap-5 transition duration-500 transform scale-0 opacity-0"
+    >
+      <!-- Users will be displayed here -->
+    </div>
+
+    <!-- Popup Message Setting -->
+    <div id="popupSection">
+      <!-- Pop up frame will be displayed here -->
+    </div>
+
+    <!-- Setting button -->
+    <div class="fixed bottom-5 flex flex-col gap-2 border right-5 z-50">
+      <i
+        id="add"
+        onclick="addHandler()"
+        class="fas fa-plus text-glsm-base p-3.5 bg-indigo-500 cursor-pointer transition translate-y-[52px] rounded-full"
+        style="z-index: 1000"
+      >
+      </i>
+      <i
+        id="setting"
+        onclick="setting()"
+        class="fas fa-gear text-glsm-base p-3.5 bg-indigo-500 cursor-pointer transition rounded-full"
+        style="z-index: 1000"
+      >
+      </i>
+    </div>
+
+    <script>
+      let category;
+
+      // menu handler, category = which button selected
+
+      // Button Setting Handler
+      // show 3 more button for scripts, servers, and users
+
+      // scriptSettingHandler
+
+      // serverSettingHandler
+
+      // userSettingHandler
+
+      // Setting Button Handler
+      function setting() {
+        if (!category)
+          return Swal.fire({
+            icon: "warning",
+            title: "Oops...",
+            text: "Please Select Category",
+          });
+
+        add.classList.toggle("translate-y-[52px]");
+        document.getElementById("setting").classList.toggle("rotate-180");
+        add.classList.toggle("rotate-180");
+      }
+
+      function addHandler() {
+        switch (category) {
+          case "scripts":
+            popupSection.innerHTML = `<iframe
+      id="popupFrame"
+      src="addScriptPopup.html"
+      class="fixed inset-0 w-full h-full border-none hidden"
+      style="z-index: 9999"
+    ></iframe>`;
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      function menu() {
+        const menu = document.getElementById("menu");
+        menu.classList.toggle("-translate-x-48");
+      }
+
+      window.addEventListener("click", async (event) => {
+        if (!event.target.matches("#profile_picture")) {
+          const dropdowns = document.getElementById("dropdown");
+          if (dropdowns.classList.contains("translate-y-24")) {
+            dropdowns.classList.remove("translate-y-24");
+          }
+        }
+
+        if (!event.target.matches("#menubar")) {
+          const menu = document.getElementById("menu");
+          if (!menu.classList.contains("-translate-x-48")) {
+            menu.classList.add("-translate-x-48");
+          }
+        }
+
+        const dataCategory =
+          event.target.attributes.getNamedItem("data-category")?.value;
+        if (dataCategory) {
+          category = dataCategory;
+          fetch(`/api/admin/${category}`)
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.error) {
+                Swal.fire({
+                  icon: "error",
+                  title: data.error,
+                });
+                return (window.location.href = "/");
+              }
+              console.log(data);
+            });
+        }
+      });
+    </script>
+
+    <script
+      src="https://kit.fontawesome.com/4a03f030e0.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
