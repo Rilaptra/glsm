@@ -25,7 +25,11 @@
       class="bg-discord-popup rounded-lg shadow-2xl p-8 m-11 relative max-w-md w-full border border-gray-700"
     >
       <div class="flex justify-end absolute right-5 top-3">
-        <button id="closeButton" class="text-gray-400 hover:text-gray-200">
+        <button
+          id="closeButton"
+          class="text-gray-400 hover:text-gray-200"
+          onclick=""
+        >
           <svg
             class="w-6 h-6"
             fill="none"
@@ -236,7 +240,7 @@
             },
             createdAt: formData.get("createdAt") || new Date().toISOString(),
           };
-          fetch("/api/admin/addscript", {
+          fetch("/api/admin/addScript", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -259,6 +263,7 @@
         .getElementById("closeButton")
         .addEventListener("click", function () {
           // Close the popup or navigate away
+          window.parent.postMessage("closePopup", "*");
           console.log("Close button clicked");
         });
 

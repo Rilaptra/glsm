@@ -138,7 +138,18 @@
 
     <!-- Popup Message Setting -->
     <div id="popupSection">
-      <!-- Pop up frame will be displayed here -->
+      <iframe
+        id="popupFrameScript"
+        src="addScriptPopup.html"
+        class="fixed inset-0 w-full h-full border-none hidden"
+        style="z-index: 10001"
+      ></iframe>
+      <iframe
+        id="popupFrameServer"
+        src="addServerPopup.html"
+        class="fixed inset-0 w-full h-full border-none hidden"
+        style="z-index: 10001"
+      ></iframe>
     </div>
 
     <!-- Setting button -->
@@ -190,12 +201,14 @@
       function addHandler() {
         switch (category) {
           case "scripts":
-            popupSection.innerHTML = `<iframe
-      id="popupFrame"
-      src="addScriptPopup.html"
-      class="fixed inset-0 w-full h-full border-none hidden"
-      style="z-index: 9999"
-    ></iframe>`;
+            document
+              .getElementById("popupFrameScript")
+              .classList.remove("hidden");
+            break;
+          case "servers":
+            document
+              .getElementById("popupFrameServer")
+              .classList.remove("hidden");
             break;
 
           default:
@@ -241,6 +254,18 @@
             });
         }
       });
+
+      window.addEventListener(
+        "message",
+        async function (event) {
+          if (event.data === "closePopup") {
+            document.getElementById("popupFrameScript").classList.add("hidden");
+            document.getElementById("popupFrameUser").classList.add("hidden");
+            document.getElementById("popupFrameServer").classList.add("hidden");
+          }
+        },
+        false
+      );
     </script>
 
     <script

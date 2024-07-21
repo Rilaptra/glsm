@@ -307,18 +307,18 @@ class Database extends Map {
 }
 
 /**
- * @class User
- * @description Represents a user in the system.
+ * Represents a user.
  */
 class User {
   /**
-   * @constructor
-   * @param {{}} userData - The user data.
-   * @param {string} userData.id - The unique identifier for the user.
-   * @param {string} userData.username - The username of the user.
-   * @param {string} [userData.avatar] - The avatar of the user.
-   * @param {Server[]} [userData.guilds] - The guilds of the user.
-   * @param {boolean} [userData.isAdmin=false] - Whether the user is an admin.
+   * Creates a new User instance.
+   * @param {Object} params - The parameters for creating a user.
+   * @param {string} params.id - The ID of the user.
+   * @param {string} params.username - The username of the user.
+   * @param {boolean} [params.isAdmin=false] - Indicates if the user is an admin.
+   * @param {string} [params.avatar=null] - The avatar hash of the user.
+   * @param {Server[]} [params.guilds=[]] - The guilds associated with the user.
+   * @param {string} params.token - The token of the user.
    */
   constructor({
     id,
@@ -328,17 +328,45 @@ class User {
     guilds = [],
     token,
   }) {
+    /**
+     * @type {number}
+     */
     this.balance = 0;
+
+    /**
+     * @type {Array}
+     */
     this.scriptBuyed = [];
+
+    /**
+     * @type {{id: string, username: string, avatar: string, avatarUrl: string}}
+     * @property {string} id - The ID of the user.
+     * @property {string} username - The username of the user.
+     * @property {string} avatar - The avatar hash of the user.
+     * @property {string} avatarUrl - The URL of the user's avatar.
+     */
     this.discord = {
       id,
       username,
       avatar,
       avatarUrl: `https://cdn.discordapp.com/avatars/${id}/${avatar}`,
     };
+
+    /**
+     * @type {string}
+     */
     this.id = id;
+
+    /**
+     * @type {boolean}
+     */
     this.isAdmin = isAdmin;
+
+    /**
+     * @type {string}
+     */
     this.token = token;
+
     /**
      * @type {Server[]}
      */
@@ -394,13 +422,23 @@ class Server {
    * @param {Object} params - The parameters for creating a server.
    * @param {string} params.id - The ID of the server.
    * @param {string} params.name - The name of the server.
+   * @param {string} params.link - The link of the server.
    * @param {boolean} [params.owner=false] - Indicates if the current user is the owner of the server.
    * @param {string} [params.description="No Description"] - The description of the server.
    * @param {string} [params.last_updated] - The date when the server was last updated. Defaults to the current date.
    * @param {number} [params.rating=0] - The rating of the server.
    * @param {string} params.logo - The URL to the server's logo.
    */
-  constructor({ id, name, owner, description, last_updated, rating, logo }) {
+  constructor({
+    id,
+    name,
+    link,
+    owner,
+    description,
+    last_updated,
+    rating,
+    logo,
+  }) {
     /**
      * @type {string}
      */
@@ -410,6 +448,11 @@ class Server {
      * @type {string}
      */
     this.name = name;
+
+    /**
+     * @type {string}
+     */
+    this.link = link;
 
     /**
      * @type {boolean}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Server Popup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "discord-popup": "#36393f",
+              "discord-button": "#5865f2",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-gray-700 bg-opacity-60 flex items-center justify-center min-h-screen"
+  >
+    <div
+      class="bg-discord-popup rounded-lg shadow-2xl p-8 m-11 relative max-w-md w-full border border-gray-700"
+    >
+      <div class="flex justify-end absolute right-5 top-3">
+        <button id="closeButton" class="text-gray-400 hover:text-gray-200">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <h2 class="text-2xl font-bold mb-6 text-gray-200 text-center">
+        Add New Server
+      </h2>
+
+      <form id="addServerForm" class="space-y-4">
+        <div>
+          <label for="id" class="block text-sm font-medium text-gray-300"
+            >ID</label
+          >
+          <input
+            type="text"
+            id="id"
+            name="id"
+            required
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-300"
+            >Name</label
+          >
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label for="owner" class="block text-sm font-medium text-gray-300"
+            >Owner</label
+          >
+          <input
+            type="text"
+            id="owner"
+            name="owner"
+            required
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label for="link" class="block text-sm font-medium text-gray-300"
+            >Link</label
+          >
+          <input
+            type="text"
+            id="link"
+            name="link"
+            required
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-300"
+            >Description</label
+          >
+          <textarea
+            id="description"
+            name="description"
+            class="mt-1 resize-none outline-none p-3 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          ></textarea>
+        </div>
+
+        <div>
+          <label
+            for="lastUpdated"
+            class="block text-sm font-medium text-gray-300"
+            >Last Updated (optional)</label
+          >
+          <input
+            type="date"
+            id="lastUpdated"
+            name="lastUpdated"
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label for="rating" class="block text-sm font-medium text-gray-300"
+            >Rating</label
+          >
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            value="0"
+            min="0"
+            max="5"
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div>
+          <label for="logo" class="block text-sm font-medium text-gray-300"
+            >Logo</label
+          >
+          <input
+            type="text"
+            id="logo"
+            name="logo"
+            required
+            class="p-3 outline-none mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-200 focus:border-discord-button focus:ring-discord-button"
+          />
+        </div>
+
+        <div class="mt-6">
+          <button
+            type="submit"
+            class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-200 bg-discord-button hover:bg-discord-button focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-discord-button"
+          >
+            Add Server
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("addServerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          const serverData = {
+            id: formData.get("id"),
+            name: formData.get("name"),
+            owner: formData.get("owner"),
+            link: formData.get("link"),
+            description: formData.get("description") || "No Description",
+            last_updated:
+              formData.get("lastUpdated") ||
+              new Date().toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+              }),
+            rating: Number(formData.get("rating")) || 0,
+            logo: formData.get("logo"),
+          };
+          fetch("/api/admin/addServer", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(serverData),
+          })
+            .then((res) => {
+              if (!res.ok) {
+                alert("Failed to add server");
+                return console.log(res);
+              }
+              return res.json();
+            })
+            .then((data) => {
+              alert(data.message);
+            });
+        });
+
+      document
+        .getElementById("closeButton")
+        .addEventListener("click", function () {
+          // Close the popup or navigate away
+          window.parent.postMessage("closePopup", "*");
+          console.log("Close button clicked");
+        });
+    </script>
+    <script
+      src="https://kit.fontawesome.com/4a03f030e0.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

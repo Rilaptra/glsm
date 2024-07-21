@@ -1,4 +1,4 @@
-const { Database, Script } = require("../../classes");
+const { Database, Script, User } = require("../../classes");
 
 /**
  *
