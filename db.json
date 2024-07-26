@@ -101,5 +101,19 @@
       "guilds": []
     }
   },
-  "scripts": {}
+  "scripts": {
+    "1721701280576": {
+      "id": "1721701280576",
+      "name": "Ewean",
+      "description": "Mengewe",
+      "link": "https://ewe.ewe",
+      "author": "Ewe",
+      "server": "LuaGT",
+      "price": {
+        "money": 69,
+        "dl": 69
+      },
+      "createdAt": "2024-07-23T02:21:20.576Z"
+    }
+  }
 }
