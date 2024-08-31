@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editable Script Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div
+      id="cardContent"
+      class="bg-white rounded-2xl p-4 m-4 shadow-md relative"
+    >
+      <!-- Triple dot menu -->
+      <div class="absolute top-2 right-2">
+        <button
+          onclick="toggleMenu()"
+          class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            id="ddmenu"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
+          </svg>
+        </button>
+        <div
+          id="dropdownMenu"
+          class="hidden absolute right-0 mt-2 w-32 bg-gray-100 rounded-md shadow-lg z-10"
+        >
+          <a
+            href="#"
+            onclick="editCard()"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 inline-block mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+            Edit
+          </a>
+          <a
+            href="#"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 inline-block mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+            Delete
+          </a>
+        </div>
+      </div>
+
+      <h2 id="scriptName" class="text-xl font-bold mb-2 truncate pr-8">
+        Script Name Long...
+      </h2>
+
+      <!-- Thumbnail dan Input Link YouTube -->
+      <div class="relative bg-gray-200 aspect-[16/9] rounded-lg mb-3">
+        <!-- Thumbnail YouTube -->
+
+        <iframe
+          id="youtubeThumbnail"
+          class="w-full h-full rounded-lg"
+          src="https://www.youtube.com/embed/52jsGA0jNkg?controls=0"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+
+        <!-- Input untuk link YouTube (disembunyikan secara default) -->
+        <input
+          id="youtubeLink"
+          type="text"
+          class="hidden absolute inset-0 w-full h-full bg-gray-100 rounded-lg p-2 border border-blue-500"
+          value="https://www.youtube.com/watch?v=52jsGA0jNag"
+        />
+      </div>
+
+      <p id="scriptDescription" class="text-sm text-gray-600 mb-3 line-clamp-3">
+        Description of the script, what this script can do, or whatever
+        information of this script, this script serves as a comprehensive tool
+        designed to automate a variety of tasks with remarkable efficiency...
+      </p>
+
+      <div class="flex flex-wrap gap-2 mb-3">
+        <span
+          id="scriptAuthor"
+          class="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs"
+          >By Erzy.sh</span
+        >
+        <span
+          id="scriptCategory"
+          class="px-2 py-1 bg-orange-100 text-orange-600 rounded-full text-xs"
+          >Category</span
+        >
+        <span class="px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs"
+          >Showcase</span
+        >
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div id="scriptPrice" class="text-lg font-bold">Rp 20k / 4 DLs</div>
+        <button
+          id="purchaseButton"
+          class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm flex items-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mr-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+          Purchase
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("dropdownMenu");
+        menu.classList.toggle("hidden");
+      }
+
+      function editCard() {
+        const elements = [
+          "scriptName",
+          "scriptDescription",
+          "scriptAuthor",
+          "scriptCategory",
+          "scriptPrice",
+        ];
+        elements.forEach((id) => {
+          const el = document.getElementById(id);
+          el.contentEditable = true;
+          el.classList.add("border", "border-blue-500", "rounded", "px-1");
+        });
+
+        // Tampilkan input YouTube link, sembunyikan thumbnail
+        document.getElementById("youtubeThumbnail").classList.add("hidden");
+        document.getElementById("youtubeLink").classList.remove("hidden");
+        youtubeLink.value = youtubeThumbnail.src;
+
+        const purchaseButton = document.getElementById("purchaseButton");
+        purchaseButton.innerHTML = "Save";
+
+        // Simulasi pengiriman data ke server
+        const cardContent = document.getElementById("cardContent");
+        cardContent.innerHTML =
+          '<div class="flex justify-center items-center p-10 mx-10"><div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div></div>';
+
+        setTimeout(() => {
+          console.log("Sending data to server:", data);
+          location.reload(); // Reload the page to reset the card
+        }, 2000);
+      }
+    </script>
+  </body>
+</html>
