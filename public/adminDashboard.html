@@ -63,10 +63,57 @@
     <div id="root"></div>
 
     <script type="text/babel">
+      const { useState, useEffect, Fragment } = React;
+      
+      const SettingsButton = () => {
+        const [settingsVisible, setSettingsVisible] = useState(false);
+        const [category, setCategory] = useState(null);
+
+        const toggleSettings = () => {
+          setSettingsVisible(!settingsVisible);
+        };
+
+        const handleAdd = () => {
+          if (!category) {
+            return Swal.fire({
+              icon: "warning",
+              title: "Oops...",
+              text: "Please Select Category",
+            });
+          }
+          toggleSettings();
+          // Handle category-specific actions
+        };
+
+        return (
+          <div
+            id="settings"
+            className={`fixed bottom-5 flex flex-col gap-2 ${
+              settingsVisible ? "" : "scale-0"
+            } origin-center right-5 z-50`}
+          >
+            <i
+              id="add"
+              onClick={handleAdd}
+              className="fas fa-plus text-glsm-base p-3.5 bg-indigo-500 cursor-pointer transition translate-y-[52px] rounded-full"
+              style={{ zIndex: 1000 }}
+            ></i>
+            <i
+              id="setting"
+              onClick={toggleSettings}
+              className={`fas fa-gear text-glsm-base p-3.5 bg-indigo-500 cursor-pointer transition rounded-full ${
+                settingsVisible ? "rotate-180" : ""
+              }`}
+              style={{ zIndex: 1000 }}
+            ></i>
+          </div>
+        );
+      };
+      
       const App = () => {
-        const [dropdownVisible, setDropdownVisible] = React.useState(false);
-        const [menuVisible, setMenuVisible] = React.useState(false);
-        const [category, setCategory] = React.useState(null);
+        const [dropdownVisible, setDropdownVisible] = useState(false);
+        const [menuVisible, setMenuVisible] = useState(false);
+        const [category, setCategory] = useState(null);
 
         const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
         const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -75,7 +122,7 @@
           setCategory(selectedCategory);
           document.getElementById("settings").classList.remove("scale-0");
           try {
-            const response = await fetch(`/api/admin/${selectedCategory}`);
+            const response = await fetch(`https://5b88-47-253-82-249.ngrok-free.app/api/admin/${selectedCategory}`);
             const data = await response.json();
             if (data.error) {
               Swal.fire({
@@ -93,7 +140,7 @@
         };
 
         return (
-          <React.Fragment>
+          <Fragment>
             <nav className="bg-indigo-500 shadow-lg">
               <div className="container mx-auto px-4 py-3 flex items-center justify-between">
                 <i
@@ -165,7 +212,22 @@
             </div>
 
             {/* Popup and Settings sections remain unchanged */}
-          </React.Fragment>
+            <div id="popupSection">
+              <iframe
+                id="popupFrameScript"
+                src="addScriptPopup.html"
+                className="fixed inset-0 w-full h-full border-none hidden"
+                style={{ zIndex: 10001 }}
+              ></iframe>
+              <iframe
+                id="popupFrameServer"
+                src="addServerPopup.html"
+                className="fixed inset-0 w-full h-full border-none hidden"
+                style={{ zIndex: 10001 }}
+              ></iframe>
+            </div>
+            <SettingsButton />
+          </Fragment>
         );
       };
 
