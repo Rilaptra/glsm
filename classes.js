@@ -334,7 +334,7 @@ class User {
     this.balance = 0;
 
     /**
-     * @type {Array}
+     * @type {string[]}
      */
     this.scriptBuyed = [];
 
