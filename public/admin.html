@@ -46,6 +46,24 @@
         },
       };
     </script>
+    <!-- <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style> -->
   </head>
   <body class="min-h-full bg-gray-600">
     <nav class="bg-indigo-500 shadow-lg">
@@ -64,7 +82,7 @@
               src="https://i.ibb.co/2dh4YL3/nulprofile.jpg"
               id="profile_picture"
               class="w-10 h-10 rounded-full border-2 border-indigo-400 hover:border-gray-100 transition duration-300 cursor-pointer"
-              onclick="(() =>{
+              onclick="(() => {
                 dropdown.classList.toggle('translate-y-24')
               })()"
             />
@@ -120,73 +138,9 @@
 
     <div
       id="items"
-      class="container bg-slate-400 mx-2 my-3 p-5 flex flex-col transition"
+      class="container bg-slate-400 mx-2 my-3 p-5 -z-20 relative flex flex-wrap transition"
     >
-      <!-- Scripts will be displayed here -->
-
-      <!-- Script Card -->
-      <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <div class="p-6">
-          <div class="flex justify-between items-start mb-4">
-            <h2 class="text-2xl font-bold">Rotasi V3 GUI</h2>
-            <div class="relative">
-              <button
-                class="text-gray-500 hover:text-gray-700 focus:outline-none"
-                id="scriptMenuButton"
-              >
-                <i class="fas fa-ellipsis-v"></i>
-              </button>
-              <div
-                class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden"
-                id="scriptMenu"
-              >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  ><i class="fas fa-edit mr-2"></i>Edit</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  ><i class="fas fa-trash-alt mr-2"></i>Delete</a
-                >
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  ><i class="fas fa-download mr-2"></i>Download</a
-                >
-              </div>
-            </div>
-          </div>
-          <p class="font-semibold text-lg">Sample Script</p>
-          <p><i class="fas fa-code text-indigo-500 mr-2"></i>ID: script456</p>
-          <p>
-            <i class="fas fa-file-alt text-gray-500 mr-2"></i>Description: A
-            sample script for demonstration
-          </p>
-          <p>
-            <i class="fas fa-external-link text-blue-500 mr-2"></i>Youtube:
-            <a href="#" class="text-blue-500">https://example.com/script</a>
-          </p>
-          <p>
-            <i class="fas fa-link text-blue-500 mr-2"></i>Download:
-            <a href="#" class="text-blue-500">https://example.com/script</a>
-          </p>
-          <p><i class="fas fa-user text-green-500 mr-2"></i>Author: John Doe</p>
-          <p>
-            <i class="fas fa-server text-blue-500 mr-2"></i>Server: Erzy.sh
-            Server
-          </p>
-          <div class="flex items-center mt-2">
-            <i class="fas fa-dollar-sign text-green-500 mr-2"></i>
-            <p>Price: $10 / 5 DL</p>
-          </div>
-          <p>
-            <i class="fas fa-calendar-plus text-purple-500 mr-2"></i>Created At:
-            2024-07-21
-          </p>
-        </div>
-      </div>
+      <!-- Items will be displayed here -->
     </div>
 
     <!-- Popup Message Setting -->
@@ -235,9 +189,37 @@
 
       /**
        * @param {string} category
-       * @param {Array} data
+       * @param {{id: string, name: string, roles: {name: string, color:string}[], scripts: string[]}[]} data
        */
-      function displayCard(category, data) {}
+      function displayCard(category, data) {
+        const itemHandler = document.getElementById("items");
+        const iframes = [];
+        switch (category) {
+          case "users":
+            data.forEach((user) => {
+              // Create iframe element
+              const iframe = document.createElement("iframe");
+              iframe.src = `adminUserCard.html`;
+              iframe.className = "w-full h-full border-none"; // Ensure the iframe has full width and height
+              iframes.push(iframe);
+
+              // Adding the iframe to the item handler
+              itemHandler.appendChild(iframe);
+
+              // Wait for iframe to load before posting message
+              iframe.onload = () => {
+                iframe.contentWindow.postMessage(user, "*");
+              };
+            });
+
+            // console result
+            console.log(iframes);
+            break;
+
+          default:
+            break;
+        }
+      }
 
       // Setting Button Handler
       function setting() {
