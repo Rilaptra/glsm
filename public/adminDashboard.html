@@ -114,6 +114,7 @@
         const [dropdownVisible, setDropdownVisible] = useState(false);
         const [menuVisible, setMenuVisible] = useState(false);
         const [category, setCategory] = useState(null);
+        const [items, setItems] = useState(null)
 
         const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
         const toggleMenu = () => setMenuVisible(!menuVisible);
@@ -132,7 +133,8 @@
               window.location.href = "/";
             } else {
               // Handle data display here
-              console.log(data);
+              setItems(data)
+              console.log(items)
             }
           } catch (error) {
             console.error("Error fetching data:", error);
@@ -212,20 +214,6 @@
             </div>
 
             {/* Popup and Settings sections remain unchanged */}
-            <div id="popupSection">
-              <iframe
-                id="popupFrameScript"
-                src="addScriptPopup.html"
-                className="fixed inset-0 w-full h-full border-none hidden"
-                style={{ zIndex: 10001 }}
-              ></iframe>
-              <iframe
-                id="popupFrameServer"
-                src="addServerPopup.html"
-                className="fixed inset-0 w-full h-full border-none hidden"
-                style={{ zIndex: 10001 }}
-              ></iframe>
-            </div>
             <SettingsButton />
           </Fragment>
         );
