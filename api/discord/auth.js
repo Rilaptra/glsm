@@ -99,8 +99,8 @@ module.exports = async (data, db, callback) => {
         headers: {
           Location: "/",
           "Set-Cookie": `token=${access_token}; Expires=${new Date(
-            Date.now() + expires_in
-          ).toUTCString()}; Max-Age=${expires_in / 1000}; HttpOnly; Path=/;`,
+            Date.now() + 1 * 24 * 60 * 60 * 1000
+          ).toUTCString()}; Max-Age=${7 * 24 * 60 * 60}; HttpOnly; Path=/;`,
           "Access-Control-Expose-Headers": "Set-Cookie",
         },
       };

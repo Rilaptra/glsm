@@ -28,6 +28,7 @@ const callApiHandler = (apiHandler, data, db, res) => {
     if (err) {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: err.message }));
+      console.log(err);
     } else {
       res.writeHead(result.status || 200, {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const server = http.createServer((req, res) => {
         data.cookie = cookie.parse(req.headers.cookie || "");
         data.req = req;
 
-        if (req.method === "POST") {
+        if (req.method !== "GET") {
           let body = "";
           req.on("data", (chunk) => {
             body += chunk.toString();
