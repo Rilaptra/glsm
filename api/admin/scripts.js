@@ -16,7 +16,23 @@ module.exports = (data, db, callback) => {
   if (data.req.method === "GET") {
     if (Object.values(db.get("scripts")).length < 1)
       return callback(null, { message: "No Scripts Found!" });
-    return callback(null, db.get("scripts"));
+    const scripts = Object.values(db.get("scripts")).map(
+      /**
+       *
+       * @param {Script} script
+       * @returns
+       */
+      (script) => {
+        return {
+          name: script.name,
+          description: script.description,
+          author: script.author,
+          price: `Rp ${script.price.money}k / ${script.price.dl} DLs`,
+          youtubeLink: script.link,
+        };
+      }
+    );
+    return callback(null, scripts);
   }
 
   if (data.req.method === "PUT") {
@@ -45,6 +61,14 @@ module.exports = (data, db, callback) => {
 
   switch (data.req.method) {
     case "POST":
+      const { name, description, author, price, youtubeLink } = data.body.data;
+      const [, money, dl] = price.match(/Rp (\d+)k \/ (\d+) DLs/);
+      script.name = name;
+      script.description = description;
+      script.author = author;
+      script.price = { money: parseInt(money), dl: parseInt(dl) };
+      script.link = youtubeLink;
+
       db.updateScript(script.id, script);
       callback(null, { message: "Script updated successfully!" });
       break;

@@ -14,8 +14,10 @@
 
     <script type="text/babel">
       const { useState } = React;
-
-      const ScriptCard = () => {
+      /**
+       * @param {{script:{name: string, description: string, author:string, category:string, price:string, youtubeLink: string}, setItems: (val) => void}}
+       */
+      const ScriptCard = ({ script, setItems }) => {
         const [isEditing, setIsEditing] = useState(false);
         const [menuVisible, setMenuVisible] = useState(false);
         const [popupContent, setPopupContent] = useState("");
@@ -23,13 +25,11 @@
          * @type {[{name: string, description: string, author:string, category:string, price:string, youtubeLink: string}, (val) => void]}
          */
         const [cardData, setCardData] = useState({
-          name: "Script Name Long...",
-          description:
-            "Description of the script, what this script can do, or whatever information of this script, this script serves as a comprehensive tool designed to automate a variety of tasks with remarkable efficiency...",
-          author: "By Erzy.sh",
-          category: "Category",
-          price: "Rp 20k / 4 DLs",
-          youtubeLink: "https://www.youtube.com/embed/52jsGA0jNkg?controls=0",
+          name: script.name,
+          description: script.description,
+          author: script.author,
+          price: script.price,
+          youtubeLink: script.youtubeLink,
         });
 
         const toggleMenu = () => {
@@ -45,7 +45,7 @@
           setCardData({ ...cardData, [field]: e.target.value });
         };
 
-        const saveChanges = () => {
+        const saveChanges = async () => {
           setIsEditing(false);
           setPopupContent(
             <div className="flex justify-center items-center p-10 fixed z-30 mx-10">
@@ -53,9 +53,41 @@
             </div>
           );
           console.log("Sending data to server:", cardData);
-          setTimeout(() => {
-            setPopupContent();
-          }, 2000);
+          try {
+            const response = await fetch(`/api/admin/scripts`);
+            if (response.status != 200) {
+              Swal.fire({
+                title: `Error status : ${response.status}`,
+                text: "Invalid Cookie!",
+              });
+              throw new Error(
+                `Invalid Cookie! ${response.status}, ${response.error}`
+              );
+            }
+            const data = await response.json();
+            if (data.error) {
+              Swal.fire({
+                icon: "error",
+                title: data.error,
+              });
+              window.location.href = "/";
+            } else {
+              // Ensure data is in the expected format
+              if (Array.isArray(data)) {
+                setItems(data);
+              } else {
+                console.error("Unexpected data format:", data);
+                setItems([]);
+              }
+            }
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Failed to fetch data. Please try again later.",
+            });
+          }
         };
 
         return (
@@ -202,12 +234,6 @@
                     value={cardData.author}
                     onChange={(e) => handleInputChange(e, "author")}
                   />
-                  <input
-                    id="scriptCategory"
-                    className="px-2 py-1 bg-orange-100 text-orange-600 rounded-full text-xs border border-blue-500"
-                    value={cardData.category}
-                    onChange={(e) => handleInputChange(e, "category")}
-                  />
                 </div>
               ) : (
                 <div>
@@ -216,12 +242,6 @@
                     className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs"
                   >
                     {cardData.author}
-                  </span>
-                  <span
-                    id="scriptCategory"
-                    className="px-2 py-1 bg-orange-100 text-orange-600 rounded-full text-xs"
-                  >
-                    {cardData.category}
                   </span>
                 </div>
               )}
@@ -274,6 +294,7 @@
           </div>
         );
       };
+
       ReactDOM.render(<ScriptCard />, document.getElementById("root"));
     </script>
   </body>

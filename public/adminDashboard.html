@@ -28,6 +28,12 @@
         const [popupContent, setPopupContent] = useState("");
         const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+        setPopupContent(
+          <div className="flex justify-center items-center p-10 mx-10">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        );
+
         const popupm = (msg) => {
           const method = msg.includes("menambahkan role admin")
             ? "PUT"
@@ -149,11 +155,10 @@
               } else {
                 // Ensure data is in the expected format
                 if (Array.isArray(data)) {
-                  setItems(data);
-                  console.log(items);
+                  await setItems(data);
                 } else {
                   console.error("Unexpected data format:", data);
-                  setItems([]);
+                  await setItems([]);
                 }
               }
             } catch (error) {
@@ -278,6 +283,295 @@
         );
       };
 
+      /**
+       * @param {{script:{name: string, description: string, author:string, category:string, price:string, youtubeLink: string}, setItems: (val) => void}}
+       */
+      const ScriptCard = ({ script, setItems }) => {
+        const [isEditing, setIsEditing] = useState(false);
+        const [menuVisible, setMenuVisible] = useState(false);
+        const [popupContent, setPopupContent] = useState("");
+        /**
+         * @type {[{name: string, description: string, author:string, category:string, price:string, youtubeLink: string}, (val) => void]}
+         */
+        const [cardData, setCardData] = useState({
+          name: script.name,
+          description: script.description,
+          author: script.author,
+          price: script.price,
+          youtubeLink: script.youtubeLink,
+        });
+
+        const toggleMenu = () => {
+          setMenuVisible(!menuVisible);
+        };
+
+        const editCard = () => {
+          setIsEditing(true);
+          setMenuVisible(false);
+        };
+
+        const handleInputChange = (e, field) => {
+          setCardData({ ...cardData, [field]: e.target.value });
+        };
+
+        const saveChanges = async () => {
+          setIsEditing(false);
+          setPopupContent(
+            <div className="flex justify-center items-center p-10 fixed z-30 mx-10">
+              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+          );
+          console.log("Sending data to server:", cardData);
+          try {
+            const response = await fetch(`/api/admin/scripts`);
+            if (response.status != 200) {
+              Swal.fire({
+                title: `Error status : ${response.status}`,
+                text: "Invalid Cookie!",
+              });
+              throw new Error(
+                `Invalid Cookie! ${response.status}, ${response.error}`
+              );
+            }
+            const data = await response.json();
+            if (data.error) {
+              Swal.fire({
+                icon: "error",
+                title: data.error,
+              });
+              window.location.href = "/";
+            } else {
+              // Ensure data is in the expected format
+              if (Array.isArray(data)) {
+                await setItems(data);
+              } else {
+                console.error("Unexpected data format:", data);
+                await setItems([]);
+              }
+            }
+
+            setPopupContent("");
+            toggleMenu();
+            Swal.fire({
+              title: "Berhasil melakukan tindakan",
+              text: "User berhasil diperbarui",
+              icon: "success",
+            });
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "Failed to fetch data. Please try again later.",
+            });
+          }
+        };
+
+        return (
+          <div
+            id="cardContent"
+            className="bg-white rounded-2xl p-4 m-4 shadow-md relative"
+          >
+            {popupContent && (
+              <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+                {popupContent}
+              </div>
+            )}
+            {/* Triple dot menu */}
+            <div className="absolute top-2 right-2">
+              <button
+                onClick={toggleMenu}
+                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  id="ddmenu"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+                  />
+                </svg>
+              </button>
+              {menuVisible && (
+                <div
+                  id="dropdownMenu"
+                  className="absolute right-0 mt-2 w-32 bg-gray-100 rounded-md shadow-lg z-10"
+                >
+                  <a
+                    href="#"
+                    onClick={editCard}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 inline-block mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      />
+                    </svg>
+                    Edit
+                  </a>
+                  <a
+                    href="#"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 inline-block mr-2"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                    Delete
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {isEditing ? (
+              <input
+                id="scriptName"
+                className="text-xl font-bold mb-2 truncate pr-8 border border-blue-500 rounded px-1 w-full"
+                value={cardData.name}
+                onChange={(e) => handleInputChange(e, "name")}
+              />
+            ) : (
+              <h2
+                id="scriptName"
+                className="text-xl font-bold mb-2 truncate pr-8"
+              >
+                {cardData.name}
+              </h2>
+            )}
+
+            <div className="relative bg-gray-200 aspect-[16/9] rounded-lg mb-3">
+              {isEditing ? (
+                <input
+                  id="youtubeLink"
+                  type="text"
+                  className="absolute inset-0 w-full h-full bg-gray-100 rounded-lg p-2 border border-blue-500"
+                  value={cardData.youtubeLink}
+                  onChange={(e) => handleInputChange(e, "youtubeLink")}
+                />
+              ) : (
+                <iframe
+                  id="youtubeThumbnail"
+                  className="w-full h-full rounded-lg"
+                  src={cardData.youtubeLink}
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
+
+            {isEditing ? (
+              <textarea
+                id="scriptDescription"
+                className="text-sm text-gray-600 mb-3 w-full border border-blue-500 rounded px-1"
+                value={cardData.description}
+                onChange={(e) => handleInputChange(e, "description")}
+                rows="3"
+              />
+            ) : (
+              <p
+                id="scriptDescription"
+                className="text-sm text-gray-600 mb-3 line-clamp-3"
+              >
+                {cardData.description}
+              </p>
+            )}
+
+            <div className="flex flex-wrap gap-2 mb-3">
+              {isEditing ? (
+                <div>
+                  <input
+                    id="scriptAuthor"
+                    className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs border border-blue-500"
+                    value={cardData.author}
+                    onChange={(e) => handleInputChange(e, "author")}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <span
+                    id="scriptAuthor"
+                    className="px-2 py-1 bg-blue-100 text-blue-600 rounded-full text-xs"
+                  >
+                    {cardData.author}
+                  </span>
+                </div>
+              )}
+              <span className="px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs">
+                Showcase
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between">
+              {isEditing ? (
+                <input
+                  id="scriptPrice"
+                  className="text-lg font-bold border border-blue-500 rounded px-1"
+                  value={cardData.price}
+                  onChange={(e) => handleInputChange(e, "price")}
+                />
+              ) : (
+                <div id="scriptPrice" className="text-lg font-bold">
+                  {cardData.price}
+                </div>
+              )}
+              <button
+                id="purchaseButton"
+                className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm flex items-center"
+                onClick={isEditing ? saveChanges : null}
+              >
+                {isEditing ? (
+                  "Save"
+                ) : (
+                  <div className="relative p-1 flex justify-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-4 w-4 mr-1 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                    <span>Purchase</span>
+                  </div>
+                )}
+              </button>
+            </div>
+          </div>
+        );
+      };
+
       // Main
       const App = () => {
         const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -309,11 +603,11 @@
             } else {
               // Ensure data is in the expected format
               if (Array.isArray(data)) {
-                setItems(data);
+                await setItems(data);
                 console.log(items);
               } else {
                 console.error("Unexpected data format:", data);
-                setItems([]);
+                await setItems([]);
               }
             }
           } catch (error) {
@@ -374,19 +668,19 @@
             >
               <ul>
                 <li
-                  onClick={() => handleCategoryClick("scripts")}
+                  onClick={async () => await handleCategoryClick("scripts")}
                   className="text-white py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
                 >
                   <i className="fas fa-code mr-3"></i>Scripts
                 </li>
                 <li
-                  onClick={() => handleCategoryClick("servers")}
+                  onClick={async () => await handleCategoryClick("servers")}
                   className="text-white py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
                 >
                   <i className="fas fa-server mr-3.5 ml-0.5"></i>Servers
                 </li>
                 <li
-                  onClick={() => handleCategoryClick("users")}
+                  onClick={async () => await handleCategoryClick("users")}
                   className="text-white py-2.5 px-7 cursor-pointer hover:bg-indigo-400 transition duration-200"
                 >
                   <i className="fas fa-users mr-2.5"></i>Users
@@ -398,9 +692,38 @@
               id="items"
               className="container mx-auto bg-gray-200 my-3 p-5 relative flex flex-wrap justify-center"
             >
-              {items.map((item, index) => (
-                <UserCard key={index} user={item} setItems={setItems} />
-              ))}
+              {items.map((item, index) => {
+                switch (category) {
+                  case "users":
+                    return (
+                      <UserCard key={index} user={item} setItems={setItems} />
+                    );
+                    break;
+
+                  case "servers":
+                    {
+                      /*<ServerCard
+                      key={index}
+                      server={item}
+                      setItems={setItems}
+                    />;*/
+                    }
+                    break;
+
+                  case "scripts":
+                    return (
+                      <ScriptCard
+                        key={index}
+                        script={item}
+                        setItems={setItems}
+                      />
+                    );
+                    break;
+
+                  default:
+                    break;
+                }
+              })}
             </div>
           </Fragment>
         );

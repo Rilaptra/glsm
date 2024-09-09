@@ -55,39 +55,6 @@
         }
       ]
     },
-    "618796322262351893": {
-      "balance": 0,
-      "scriptBuyed": [],
-      "discord": {
-        "id": "618796322262351893",
-        "username": "frosty.ice",
-        "avatar": "7477768927168bbef35fd5961c1912d9",
-        "avatarUrl": "https://cdn.discordapp.com/avatars/618796322262351893/7477768927168bbef35fd5961c1912d9"
-      },
-      "id": "618796322262351893",
-      "isAdmin": true,
-      "token": "FVBKUx0CEWSn7xrWelRR8skmPJMfdP",
-      "guilds": [
-        {
-          "id": "891923435033362452",
-          "name": "Lua GT",
-          "owner": false,
-          "description": "No Description",
-          "lastUpdated": "07/19/2024",
-          "rating": 0,
-          "logo": "bcee3a4904bc30b918f4e786d051c3e9"
-        },
-        {
-          "id": "1110517120074256434",
-          "name": "Erzy Server",
-          "owner": false,
-          "description": "No Description",
-          "lastUpdated": "07/19/2024",
-          "rating": 0,
-          "logo": "041780514a8b19f7a2472a43127ac9f5"
-        }
-      ]
-    },
     "1256202302147137537": {
       "balance": 0,
       "scriptBuyed": [],
